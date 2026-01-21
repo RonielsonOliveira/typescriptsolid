@@ -2,6 +2,7 @@ import { OrderStatus } from './interfaces/order-status';
 import { Messaging } from '../services/messaging';
 import { Persistency } from '../services/persistency';
 import { ShoppingCart } from './shopping-cart';
+import { CurstomerOrder } from './interfaces/customer-protocol';
 
 export class Order {
   private _orderStatus: OrderStatus = 'open'; //
@@ -10,6 +11,7 @@ export class Order {
     private readonly cart: ShoppingCart,
     private readonly messaging: Messaging,
     private readonly persistency: Persistency,
+    private readonly customer: CurstomerOrder,
   ) {}
   get orderStatus(): OrderStatus {
     return this._orderStatus;
@@ -22,7 +24,14 @@ export class Order {
     this.messaging.sendMessage(
       `Seu pedido com total de ${this.cart.totalWithDicount()} foi recebido`,
     );
+
     this.persistency.saveOrder();
     this.cart.clear();
+
+    console.log(
+      'O cliente e: ',
+      this.customer.getName(),
+      this.customer.getIDN(),
+    );
   }
 }
