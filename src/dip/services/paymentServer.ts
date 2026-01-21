@@ -14,6 +14,6 @@ export class PaymentServer implements PaymentSend {
 
       return `Pagamento de ${value.toFixed(2)} foi submetido para analise com os seguintes dados ${safeJson}`;
     }
-    return `Pagamento de ${value} foi submetido para analise com os seguintes dados ${JSON.stringify(data.data)} `;
+    return `Pagamento de ${value.toFixed(2)} foi submetido para analise com os seguintes dados ${JSON.stringify(data.data)} `;
   }
 }

@@ -56,6 +56,6 @@ export class BoletoPayment implements BoletoProtocol, PaymentProtocol {
       validade: this.validade,
       cpf: this.cpf,
     };
-    return { type: 'creditCard', data };
+    return { type: 'boleto', data };
   }
 }
