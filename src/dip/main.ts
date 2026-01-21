@@ -10,6 +10,15 @@ import {
 } from './classes/discount';
 import { EnterpriseCustomer, IndividualCustomer } from './classes/customer';
 import { MessagingProtocol } from './classes/interfaces/messaging-protocol';
+import {
+  BoletoPayment,
+  CreditCardPayment,
+  PixPayment,
+} from './classes/payment';
+import {
+  BoletoProtocol,
+  CreditCardProtocol,
+} from './classes/interfaces/payment-protocol';
 
 const fiftyPercentDiscount = new FiftyPercentDiscount();
 //const tenPercentDiscount = new TenPercentDiscount();
@@ -29,6 +38,30 @@ class MessagingMock implements MessagingProtocol {
     console.log('A mensagem do mock');
   }
 }
+const payment = new PixPayment('31231231', '31231231');
+
+const Card: CreditCardProtocol = {
+  numero: '4111111111111111',
+  validade: {
+    month: 10,
+    year: 2028,
+  },
+  ccv: 123,
+};
+const Boleto: BoletoProtocol = {
+  codigoDeBarras: 4111111111111111,
+  validade: {
+    day: 12,
+    month: 10,
+    year: 2026,
+  },
+  cpf: '123',
+};
+const paymentCard = new BoletoPayment(
+  Boleto.codigoDeBarras,
+  Boleto.validade,
+  Boleto.cpf,
+);
 const messagingMock = new MessagingMock();
 
 const order = new Order(
@@ -36,6 +69,7 @@ const order = new Order(
   messagingMock,
   persistency,
   enterpriseCustomer,
+  paymentCard,
 );
 
 shoppingCart.addItem(new Product('Tenis', 149.99));
